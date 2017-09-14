@@ -6,11 +6,11 @@
 
 int main(void){
 	int num1, num2, product, i, str_len, answer;
-	char numb_str[12];
+	char numb_str[18];
 	bool palindromic = true;
 
-	for(num1 = 0; num1 < 100; num1++){
-		for(num2 = 0; num2 < 100; num2++){
+	for(num1 = 0; num1 < 1000; num1++){
+		for(num2 = 0; num2 < 1000; num2++){
 			product = num1 * num2;
 
 			// convert the number to a string
@@ -25,7 +25,11 @@ int main(void){
 				}
 			}
 
-			if(palindromic) answer = product;
+			// update answer if the product is palindromic and bigger than the
+			// previous biggest answer
+			if(palindromic && product > answer){
+				answer = product;
+			}
 
 			palindromic = true;
 		}
