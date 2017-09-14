@@ -1,9 +1,10 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+#define nr_of_adjecent 13
 
 int main(void){
-	long answer = 0, product;
+	long answer = 0, product = 1;
 	char input[1001] =  "73167176531330624919225119674426574742355349194934"
 						"96983520312774506326239578318016984801869478851843"
 						"85861560789112949495459501737958331952853208805511"
@@ -24,32 +25,29 @@ int main(void){
 						"84580156166097919133875499200524063689912560717606"
 						"05886116467109405077541002256983155200055935729725"
 						"71636269561882670428252483600823257530420752963450";
-	char solution[4] = "";
-	int i;
+	char solution[nr_of_adjecent + 1] = "";
+	int i, j;
 
 
-	printf("%d\n", input[0] - '0');
-
-	for(i = 3; i < 1000; i++){
-		product = (input[i - 3] - '0') * (input[i - 2] - '0') * (input[i - 1] - '0') * (input[i] - '0');
-//		product = ((int)input[i - 3] - '0') * ((int)input[i - 2] - '0') * ((int)input[i - 1] - '0') * ((int)input - '0');
-//		product = (int)input[i - 3] * (int)input[i - 2] * (int)input[i - 1] * (int)input;
-
-
-
-		if(product > answer){
-			solution[0] = input[i - 3];
-			solution[1] = input[i - 2];
-			solution[2] = input[i - 1];
-			solution[3] = input[i];
-			answer = product;
+	for(i = nr_of_adjecent - 1; i < 1000; i++){
+		// calculate the product
+		for(j = nr_of_adjecent - 1; j >= 0; j--){
+			product = (input[i - j] - '0') * product;
 		}
 
+		// check if the product is bigger than the current solution
+		if(product > answer){
+			answer = product;
 
+			// store the solution numbers (not required)
+			for(j = 0; j < nr_of_adjecent; j++){
+				solution[j] = input[i - nr_of_adjecent + 1 + j];
+			}
+		}
+
+		product = 1;
 	}
 
-
-//	printf("%s\n", input);
 	printf("answer=%ld (%s)\n", answer, solution);
 	return EXIT_SUCCESS;
 }
